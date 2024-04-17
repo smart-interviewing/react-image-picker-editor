@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react"
-import { ImagePickerConf, ImagePickerEditorRef, IState } from "./models/index.models";
+import { ImagePickerConf, IState } from "./models/index.models";
 import './styles.scss'
 import labelEs from './i18n/es.json';
 import labelPT from './i18n/pt.json';
@@ -16,6 +16,10 @@ interface ImagePickerEditorProps {
   imageSrcProp?: string;
   color?: string;
   imageChanged?: Function;
+}
+
+export interface ImagePickerEditorRef {
+  handleFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const initialConfig: ImagePickerConf = {
