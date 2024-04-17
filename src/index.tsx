@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useEffect, useMemo, useRef, useState } from "react"
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react"
 import { ImagePickerConf, IState } from "./models/index.models";
 import './styles.scss'
 import labelEs from './i18n/es.json';
@@ -10,6 +10,17 @@ import labelDe from './i18n/de.json';
 import { convertImageUsingCanvas } from "./functions/image-processing";
 import EditImage from "./components/EditImage/EditImage";
 export * from './models/index.models';
+
+interface ImagePickerEditorProps {
+  config?: ImagePickerConf;
+  imageSrcProp?: string;
+  color?: string;
+  imageChanged?: Function;
+}
+
+export interface ImagePickerEditorRef {
+  handleFileSelect: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const initialConfig: ImagePickerConf = {
   language: 'en',
@@ -34,8 +45,22 @@ const initialState: IState = {
   quality: 100
 }
 
-const ReactImagePickerEditor = memo(({ config = {}, imageSrcProp = '', color = '#1e88e5', imageChanged = () => { } }:
-  { config: ImagePickerConf, imageSrcProp?: string, color?: string; imageChanged?: Function; }) => {
+const ReactImagePickerEditor = memo(
+  forwardRef<ImagePickerEditorRef, ImagePickerEditorProps>(
+    (
+      {
+        config = {},
+        imageSrcProp = "",
+        color = "#1e88e5",
+        imageChanged = () => {},
+      }: {
+        config: ImagePickerConf;
+        imageSrcProp?: string;
+        color?: string;
+        imageChanged?: Function;
+      },
+      ref
+    ) => {
 
   const [state, setState] = useState<IState>({
     ...initialState,
@@ -278,6 +303,10 @@ const ReactImagePickerEditor = memo(({ config = {}, imageSrcProp = '', color = '
 
   }
 
+  useImperativeHandle(ref, () => ({
+    handleFileSelect,
+  }));
+
   return <div className="ReactImagePickerEditor">
     {!loadImage &&
       <div className="place-image">
@@ -382,6 +411,6 @@ const ReactImagePickerEditor = memo(({ config = {}, imageSrcProp = '', color = '
         labels={labels} color={color} image={imageSrc}
         initialState={state}></EditImage>}
   </div >
-})
+}))
 
 export default ReactImagePickerEditor
