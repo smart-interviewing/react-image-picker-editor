@@ -317,7 +317,7 @@ const EditImage = memo(({ labels = {}, image = '', color = '#1e88e5', initialSta
                     </div>
                   </div>
 
-                  <p className="item-panel">{labels['Format']}</p>
+                  {/* <p className="item-panel">{labels['Format']}</p>
                   <div className='flex-row-start' style={{ marginTop: '10px', justifyContent: 'space-between' }}>
                     <div className="form-field" style={{ width: '100%' }}>
                       <select disabled={showCrop} value={state.format} onChange={onChangeFormat}>
@@ -326,7 +326,7 @@ const EditImage = memo(({ labels = {}, image = '', color = '#1e88e5', initialSta
                         ))}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
                 </React.Fragment>)}
 
               <div className='flex-row-start' style={{ marginTop: '5px', justifyContent: 'space-between' }}>
