@@ -303,6 +303,20 @@ const ReactImagePickerEditor = memo(
 
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onCloseEditPanel(null);
+      }
+    };
+  
+    document.addEventListener('keydown', handleKeyDown);
+  
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   useImperativeHandle(ref, () => ({
     handleFileSelect,
   }));
